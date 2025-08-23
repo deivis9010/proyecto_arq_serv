@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "90b6f3c8-5edb-4c63-88ca-588ecf4caaac",
+		"name": "proyecto_arq_serv",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9896097",
+		"_collection_link": "https://bold-shadow-354242.postman.co/workspace/Wilko-'S-Projects~bf700f50-5ce6-4a3f-b8a5-15a115b9efed/collection/9896097-90b6f3c8-5edb-4c63-88ca-588ecf4caaac?action=share&source=collection_link&creator=9896097"
+	},
+	"item": [
+		{
+			"name": "GetAllEmployees",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetOldest",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/employees/oldest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"employees",
+						"oldest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateEmployees",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Deivis\",\r\n    \"age\": 34,\r\n    \"phone\": {\r\n        \"personal\": \"555-123-123\",\r\n        \"work\": \"555-456-456\",\r\n        \"ext\": \"8253\"\r\n    },\r\n    \"privileges\": \"user\",\r\n    \"favorites\": {\r\n        \"artist\": \"Choco\",\r\n        \"food\": \"pasta\"\r\n    },\r\n    \"finished\": [\r\n        14,\r\n        6\r\n    ],\r\n    \"badges\": [\r\n        \"blue\",\r\n        \"xxxx\"\r\n    ],\r\n    \"points\": [\r\n        {\r\n            \"points\": 71,\r\n            \"bonus\": 20\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetByName",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/employees/Sue",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"employees",
+						"Sue"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
