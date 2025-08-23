@@ -47,7 +47,7 @@ exports.getEmployeeByName = async (req, res) => {
         if (employee) {
             res.json(employee);
         } else {
-            res.status(404).json({ code: 'not found' });
+            res.status(404).json({ code: 'not_found' });
         }
     } catch (error) {
         console.error('Error fetching employee by name:', error);
