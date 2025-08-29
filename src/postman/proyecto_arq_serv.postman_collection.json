@@ -8,104 +8,228 @@
 	},
 	"item": [
 		{
-			"name": "GetAllEmployees",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8000/api/employees",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"employees"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GetOldest",
-			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8000/api/employees/oldest",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"employees",
-						"oldest"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "CreateEmployees",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Deivis\",\r\n    \"age\": 34,\r\n    \"phone\": {\r\n        \"personal\": \"555-123-123\",\r\n        \"work\": \"555-456-456\",\r\n        \"ext\": \"8253\"\r\n    },\r\n    \"privileges\": \"user\",\r\n    \"favorites\": {\r\n        \"artist\": \"Choco\",\r\n        \"food\": \"pasta\"\r\n    },\r\n    \"finished\": [\r\n        14,\r\n        6\r\n    ],\r\n    \"badges\": [\r\n        \"blue\",\r\n        \"xxxx\"\r\n    ],\r\n    \"points\": [\r\n        {\r\n            \"points\": 71,\r\n            \"bonus\": 20\r\n        }\r\n    ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "employees",
+			"item": [
+				{
+					"name": "GetAllEmployees",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/employees?badges=xxxx",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employees"
+							],
+							"query": [
+								{
+									"key": "badges",
+									"value": "xxxx"
+								}
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:8000/api/employees",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"employees"
-					]
+				{
+					"name": "GetOldest",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/employees/oldest",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employees",
+								"oldest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetByName",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/employees/Deivis",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employees",
+								"Deivis"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateEmployees",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Deivis\",\r\n    \"age\": 34,\r\n    \"phone\": {\r\n        \"personal\": \"555-123-123\",\r\n        \"work\": \"555-456-456\",\r\n        \"ext\": \"8253\"\r\n    },\r\n    \"privileges\": \"user\",\r\n    \"favorites\": {\r\n        \"artist\": \"Choco\",\r\n        \"food\": \"pasta\"\r\n    },\r\n    \"finished\": [\r\n        14,\r\n        6\r\n    ],\r\n    \"badges\": [\r\n        \"blue\",\r\n        \"xxxx\"\r\n    ],\r\n    \"points\": [\r\n        {\r\n            \"points\": 71,\r\n            \"bonus\": 20\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"employees"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "GetByName",
-			"request": {
-				"auth": {
-					"type": "noauth"
+			"name": "posts",
+			"item": [
+				{
+					"name": "GetAllPosts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/posts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"posts"
+							]
+						}
+					},
+					"response": []
 				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8000/api/employees/Sue",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"api",
-						"employees",
-						"Sue"
-					]
+				{
+					"name": "CreatePosts",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Esto es un post para actualizar\",\r\n    \"text\": \"Este es el texto del post123123123\",\r\n    \"author\": \"DeivisLLLLL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/posts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PostById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/posts/68b122f020d20e4d5e5b8805",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"posts",
+								"68b122f020d20e4d5e5b8805"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdatePost",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    //\"title\": \"Esto es un post para actualizar seguro\",\r\n    //\"text\": \"Este es el texto del post123\"//,\r\n    \"author\": \"DeivisLLL\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/posts/68b12649bd78ad5c6ad688c1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"posts",
+								"68b12649bd78ad5c6ad688c1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePosts",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }
