@@ -4,6 +4,7 @@
   "description": "API de empleados con Jest",
   "main": "src/server.js",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.2.1",
     "express": "^4.19.2",
     "mongoose": "^8.18.0",

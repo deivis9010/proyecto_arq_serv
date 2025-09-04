@@ -1,3 +1,4 @@
+const HttpError = require('../models/error.model');
 const Post = require('../models/post.model');
 
 
@@ -13,10 +14,12 @@ const getAllPosts = async () => {
 const getPostById = async (postId) => {
     try {
         const post = await Post.findById(postId);
-       
+       if (!post) {
+           throw new HttpError('404', 'Post not found');
+       }
         return post;
     } catch (error) {
-        throw new Error('Error fetching post: ' + error.message);
+        throw new HttpError('404', 'Error fetching post: ' + error.message);
     }
 };
 
