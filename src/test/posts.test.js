@@ -5,6 +5,11 @@ const Post = require('../models/post.model');
 describe('Posts API', () => {
     let postId;
 
+    // Limpiar la base de datos después de cada test para evitar datos residuales
+    afterEach(async () => {
+        await Post.deleteMany({});
+    });
+
    
 
     describe('POST /api/posts', () => {
@@ -43,7 +48,7 @@ describe('Posts API', () => {
 
             expect(res.status).toBe(400);
             expect(res.body).toHaveProperty('message');
-            expect(res.body.message).toBe('Título, texto y autor son requeridos');
+            expect(res.body.message).toBe('Required fields missing');
 
             
         });
@@ -126,7 +131,7 @@ describe('Posts API', () => {
 
             expect(res.status).toBe(404);
             expect(res.body).toHaveProperty('message');
-            expect(res.body.message).toBe('Post not found');
+            expect(res.body.message).toBe('Resource not found');
         });
 
         

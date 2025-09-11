@@ -4,9 +4,11 @@
   "description": "API de empleados con Jest",
   "main": "src/server.js",
   "dependencies": {
+    "axios": "^1.11.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.1",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.0",
     "y": "^0.3.2"
   },
@@ -20,7 +22,7 @@
     "dev": "nodemon src/server.js",
     "test": "jest",
     "test:watch": "jest --watch",
-    "start:db": "docker run --name mongo-arq-serv -d -p 27017:27017 mongo:latest",
+    "start:db": "docker run --name mongo-arq-serv -d -p 27018:27017 mongo:latest",
     "stop:db": "docker stop mongo-arq-serv && docker rm mongo-arq-serv"
   },
   "jest": {
