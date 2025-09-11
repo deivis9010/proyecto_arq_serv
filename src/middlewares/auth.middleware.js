@@ -52,9 +52,11 @@ const authenticateToken = async (req, res, next) => {
         }
 
         // Verificar que el token no sea anterior al último cambio de contraseña
+        // Agregamos una tolerancia de 5 segundos para evitar problemas de sincronización temporal
         if (decoded.iat && user.lastPasswordChange) {
             const tokenIssuedAt = new Date(decoded.iat * 1000); // iat está en segundos
-            if (tokenIssuedAt < user.lastPasswordChange) {
+            const passwordChangeTime = new Date(user.lastPasswordChange.getTime() - 5000); // 5 segundos de tolerancia
+            if (tokenIssuedAt < passwordChangeTime) {
                 return next(new HttpError('401', 'Token invalidated due to password change'));
             }
         }

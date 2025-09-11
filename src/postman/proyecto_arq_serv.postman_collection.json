@@ -123,9 +123,37 @@
 			"item": [
 				{
 					"name": "GetAllPosts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authTokenPrArSer}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "http://localhost:8000/api/posts",
 							"protocol": "http",
@@ -176,7 +204,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8000/api/posts/68b122f020d20e4d5e5b8805",
+							"raw": "http://localhost:8000/api/posts/68b1351ef9ee4b9114b72f7d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -185,7 +213,7 @@
 							"path": [
 								"api",
 								"posts",
-								"68b122f020d20e4d5e5b8805"
+								"68b1351ef9ee4b9114b72f7d"
 							]
 						}
 					},
@@ -198,7 +226,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    //\"title\": \"Esto es un post para actualizar seguro\",\r\n    //\"text\": \"Este es el texto del post123\"//,\r\n    \"author\": \"DeivisLLL\"\r\n}",
+							"raw": "{\r\n    //\"title\": \"Esto es un post para actualizar seguro\",\r\n    //\"text\": \"Este es el texto del post123\"//,\r\n    \"author\": \"Deivis\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -206,7 +234,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/api/posts/68b12649bd78ad5c6ad688c1",
+							"raw": "http://localhost:8000/api/posts/68b1351ef9ee4b9114b72f7d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -215,7 +243,7 @@
 							"path": [
 								"api",
 								"posts",
-								"68b12649bd78ad5c6ad688c1"
+								"68b1351ef9ee4b9114b72f7d"
 							]
 						}
 					},
@@ -224,8 +252,139 @@
 				{
 					"name": "DeletePosts",
 					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    //\"title\": \"Esto es un post para actualizar seguro\",\r\n    //\"text\": \"Este es el texto del post123\"//,\r\n    \"author\": \"DeivisLLL\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/posts/68b1351ef9ee4b9114b72f7d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"posts",
+								"68b1351ef9ee4b9114b72f7d"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Deivis\",\r\n  \"email\": \"d@d.d\",\r\n  \"password\": \"123\",\r\n  \"bio\": \"mi bio\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllUsers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Deivis\",\r\n  \"email\": \"d@d.d\",\r\n  \"password\": \"123\",\r\n  \"bio\": \"mi bio\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"// Save the token to an environment variable\r",
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"authTokenPrArSer\", response.token);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \r\n  \"email\": \"d@d.d\",\r\n  \"password\": \"123\"\r\n  \r\n  \r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
 					},
 					"response": []
 				}
