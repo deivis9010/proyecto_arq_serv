@@ -17,6 +17,9 @@ const login = async (email, password) => {
     if (!isMatch) {
         throw new HttpError('401', 'Unauthorized');
     }
+    if (user.active === false) {
+        throw new HttpError('401', 'Unauthorized');
+    }
 
     // Generar JWT con datos del usuario
     const tokenPayload = {

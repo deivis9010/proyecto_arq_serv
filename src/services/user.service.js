@@ -29,8 +29,17 @@ const getUserById = async (userId) => {
     return user;
 };
 
+const activateUser = async (userId) => {
+    const user = await User.findByIdAndUpdate(userId, { active: true }, { new: true });
+    if (!user) {
+        throw new HttpError('404', 'Resource not found');
+    }
+    return user;
+};
+
 module.exports = {
     createUser,
     fetchAllUsers,
-    getUserById
+    getUserById,
+    activateUser
 };

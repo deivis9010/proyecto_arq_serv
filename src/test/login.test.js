@@ -13,7 +13,8 @@ describe('Login API with JWT', () => {
         testUser = await User.create({
             name: 'Test User',
             email: 'test@example.com',
-            password: 'testPassword123'
+            password: 'testPassword123',
+            active: true
         });
     });
 

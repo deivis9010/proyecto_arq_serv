@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const connectDB = require('./config/database');
 const errorHandler = require('./middlewares/errorHandler.middleware');
@@ -18,6 +19,9 @@ const loginRoutes = require('./routes/login.route');
 
 // Middlewares
 app.use(express.json());
+
+// Middleware para servir archivos estáticos de avatares
+app.use('/api/uploads/avatars', express.static(path.join(__dirname, '../uploads/avatars')));
 
 
 // Rutas
