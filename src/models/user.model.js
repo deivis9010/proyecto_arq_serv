@@ -7,20 +7,20 @@ const emailRegex = /^\S+@\S+\.\S+$/;
 const userSchema = new Schema({
   name: {
     type: String,
-    required: [true, 'El nombre es requerido'],
+    required: [true, 'Required field'],
     trim: true
   },
   email: {
     type: String,
-    required: [true, 'El email es requerido'],
+    required: [true, 'Required field'],
     trim: true,
     lowercase: true,
     unique: true,
-    match: [emailRegex, 'Formato de email inválido']
+    match: [emailRegex, 'Invalid format']
   },
   password: {
     type: String,
-    required: [true, 'La contraseña es requerida']
+    required: [true, 'Required field']
   },
   bio: {
     type: String,
@@ -29,6 +29,14 @@ const userSchema = new Schema({
   active: {
     type: Boolean,
     default: false
+  },
+  tokenVersion: {
+    type: Number,
+    default: 0 // Se incrementa cuando queremos invalidar todos los tokens del usuario
+  },
+  lastPasswordChange: {
+    type: Date,
+    default: Date.now
   }
 }, {
   timestamps: true, // campos createdAt y updatedAt
@@ -37,9 +45,10 @@ const userSchema = new Schema({
     transform(doc, ret) {
       ret.id = ret._id.toString();
       delete ret._id;
-      delete ret.__v;
-      // Nunca exponer la contraseña
+      delete ret.__v;      
       delete ret.password;
+      delete ret.lastPasswordChange;
+      delete ret.tokenVersion;
       return ret;
     }
   },
@@ -49,6 +58,8 @@ const userSchema = new Schema({
       delete ret._id;
       delete ret.__v;
       delete ret.password;
+      delete ret.lastPasswordChange;
+      delete ret.tokenVersion;
       return ret;
     }
   }
@@ -63,8 +74,14 @@ const SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS, 10) || 10;
 // Hook pre-save: hashea la contraseña cuando es nueva o ha sido modificada
 userSchema.pre('save', async function (next) {
   try {
-    console.log('Pre-save hook: hashing password if modified');
     if (!this.isModified('password')) return next();
+    
+    // Actualizar el timestamp de cambio de contraseña
+    this.lastPasswordChange = new Date();
+    
+    // Incrementar la versión del token para invalidar tokens anteriores
+    this.tokenVersion += 1;
+    
     const salt = await bcrypt.genSalt(SALT_ROUNDS);
     const hash = await bcrypt.hash(this.password, salt);
     this.password = hash;

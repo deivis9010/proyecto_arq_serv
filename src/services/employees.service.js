@@ -64,17 +64,17 @@ const validateEmployeeStructure = (employeeData) => {
     // Verificar campos requeridos
     for (const field of requiredFields) {
         if (!(field in employeeData)) {
-            return { isValid: false, message: `Campo requerido: ${field}` };
+            return { isValid: false, message: `Required field missing: ${field}` };
         }
     }
     
     // Validar tipos específicos
     if (typeof employeeData.name !== 'string') {
-        return { isValid: false, message: 'name debe ser string' };
+        return { isValid: false, message: 'Invalid data type for name' };
     }
     
     if (typeof employeeData.age !== 'number') {
-        return { isValid: false, message: 'age debe ser number' };
+        return { isValid: false, message: 'Invalid data type for age' };
     }
     
     if (typeof employeeData.phone !== 'object' || !employeeData.phone.personal || !employeeData.phone.work) {

@@ -1,9 +1,42 @@
 const request = require('supertest');
 const app = require('../app');
 const Post = require('../models/post.model');
+const User = require('../models/user.model');
 
 describe('Posts API', () => {
     let postId;
+    let authToken;
+    let testUser;
+
+    // Configurar usuario y token antes de cada test
+    beforeEach(async () => {
+        // Limpiar la base de datos antes de cada test
+        await User.deleteMany({});
+        await Post.deleteMany({});
+        
+        // Crear un usuario de prueba
+        testUser = await User.create({
+            name: 'Test User',
+            email: 'test@example.com',
+            password: 'testPassword123'
+        });
+
+        // Hacer login para obtener el token
+        const loginRes = await request(app)
+            .post('/api/login')
+            .send({
+                email: 'test@example.com',
+                password: 'testPassword123'
+            });
+
+        authToken = loginRes.body.token;
+    });
+
+    // Limpiar la base de datos después de cada test para evitar datos residuales
+    afterEach(async () => {
+        await Post.deleteMany({});
+        await User.deleteMany({});
+    });
 
    
 
@@ -17,6 +50,7 @@ describe('Posts API', () => {
 
             const res = await request(app)
                 .post('/api/posts')
+                .set('Authorization', `Bearer ${authToken}`)
                 .send(newPost);
 
             expect(res.status).toBe(201);
@@ -39,11 +73,12 @@ describe('Posts API', () => {
 
             const res = await request(app)
                 .post('/api/posts')
+                .set('Authorization', `Bearer ${authToken}`)
                 .send(newPost);
 
             expect(res.status).toBe(400);
             expect(res.body).toHaveProperty('message');
-            expect(res.body.message).toBe('Título, texto y autor son requeridos');
+            expect(res.body.message).toBe('Required fields missing');
 
             
         });
@@ -57,11 +92,28 @@ describe('Posts API', () => {
 
             const res = await request(app)
                 .post('/api/posts')
+                .set('Authorization', `Bearer ${authToken}`)
                 .send(invalidPost);
 
             expect(res.status).toBe(400);
             expect(res.body).toHaveProperty('message');
             expect(res.body.message).toMatch(/validation/i);
+        });
+
+        it('should return 401 for missing authorization token', async () => {
+            const newPost = {
+                title: 'Test Post Title',
+                text: 'This is a test post content',
+                author: 'Test Author'
+            };
+
+            const res = await request(app)
+                .post('/api/posts')
+                .send(newPost);
+
+            expect(res.status).toBe(401);
+            expect(res.body).toHaveProperty('message');
+            expect(res.body.message).toBe('Access token required');
         });
 
         
@@ -85,7 +137,9 @@ describe('Posts API', () => {
         });
 
         it('should get all posts', async () => {
-            const res = await request(app).get('/api/posts');
+            const res = await request(app)
+                .get('/api/posts')
+                .set('Authorization', `Bearer ${authToken}`);
 
             expect(res.status).toBe(200);
             
@@ -114,7 +168,9 @@ describe('Posts API', () => {
         });
 
         it('should get a post by valid ID', async () => {
-            const res = await request(app).get(`/api/posts/${testPost.id}`);
+            const res = await request(app)
+                .get(`/api/posts/${testPost.id}`)
+                .set('Authorization', `Bearer ${authToken}`);
 
             expect(res.status).toBe(200);            
             expect(res.body.id).toBe(testPost.id.toString());
@@ -122,11 +178,13 @@ describe('Posts API', () => {
 
         it('should return 404 for non-existent ID', async () => {
             const fakeId = '507f1f77bcf86cd799439011';
-            const res = await request(app).get(`/api/posts/${fakeId}`);
+            const res = await request(app)
+                .get(`/api/posts/${fakeId}`)
+                .set('Authorization', `Bearer ${authToken}`);
 
             expect(res.status).toBe(404);
             expect(res.body).toHaveProperty('message');
-            expect(res.body.message).toBe('Post not found');
+            expect(res.body.message).toBe('Resource not found');
         });
 
         
@@ -151,6 +209,7 @@ describe('Posts API', () => {
 
             const res = await request(app)
                 .patch(`/api/posts/${testPost.id}`)
+                .set('Authorization', `Bearer ${authToken}`)
                 .send(updateData);
 
             expect(res.status).toBe(200);
@@ -173,7 +232,9 @@ describe('Posts API', () => {
         });
 
         it('should delete a post by ID', async () => {
-            const res = await request(app).delete(`/api/posts/${testPost.id}`);
+            const res = await request(app)
+                .delete(`/api/posts/${testPost.id}`)
+                .set('Authorization', `Bearer ${authToken}`);
 
             expect(res.status).toBe(204);         
 

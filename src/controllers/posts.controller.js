@@ -2,42 +2,36 @@ const postsService = require('../services/posts.service');
 
 
 
-const createPost = async (req, res) => {
+const createPost = async (req, res, next) => {
     try {
         const { title, text, author } = req.body;
         
-        
         if (!title || !text || !author) {
             return res.status(400).json({                
-                message: 'Título, texto y autor son requeridos'
+                message: 'Required fields missing'
             });
         }
         
         const post = await postsService.createPost({ title, text, author });        
-         res.status(201).json(post);
+        res.status(201).json(post);
 
     } catch (error) {
-        console.error('Error en createPost:', error);
-        const statusCode = error.message.includes('validation') ? 400 : 500;
-        res.status(statusCode).json({
-            message: error.message
-        });
+        // Pasar el error al middleware de manejo de errores
+        next(error);
     }
 };
 
-const getAllPosts = async (req, res) => {
+const getAllPosts = async (req, res, next) => {
     try {
         const posts = await postsService.getAllPosts();
         res.status(200).json(posts);
     } catch (error) {
-        console.error('Error en getAllPosts:', error);
-        res.status(500).json({
-            message: error.message
-        });
+        // Pasar el error al middleware de manejo de errores
+        next(error);
     }
 };
 
-const getPostById = async (req, res) => {
+const getPostById = async (req, res, next) => {
     try {
         const id = req.params.id;
         const post = await postsService.getPostById(id);
@@ -48,14 +42,12 @@ const getPostById = async (req, res) => {
         }
         res.status(200).json(post);
     } catch (error) {
-        console.error('Error en getPostById:', error);
-        res.status(500).json({
-            message: error.message
-        });
+        // Pasar el error al middleware de manejo de errores
+        next(error);
     }
 };
 
-const updatePostPartially = async (req, res) => {
+const updatePostPartially = async (req, res, next) => {
     try {
         const id = req.params.id;
         const { title, text, author } = req.body;
@@ -68,14 +60,12 @@ const updatePostPartially = async (req, res) => {
         }
         res.status(200).json(updatedPost);
     } catch (error) {
-        console.error('Error en updatePostPartially:', error);
-        res.status(500).json({
-            message: error.message
-        });
+        // Pasar el error al middleware de manejo de errores
+        next(error);
     }
 };
 
-const deletePost = async (req, res) => {
+const deletePost = async (req, res, next) => {
     try {
         const id = req.params.id;
         const post = await postsService.deletePost(id);
@@ -86,10 +76,8 @@ const deletePost = async (req, res) => {
         }
         res.status(204).send();
     } catch (error) {
-        console.error('Error en deletePost:', error);
-        res.status(500).json({
-            message: error.message
-        });
+        // Pasar el error al middleware de manejo de errores
+        next(error);
     }
 };
 

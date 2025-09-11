@@ -12,23 +12,23 @@ const postSchema = new Schema({
     // Título del post - requerido, mínimo 5 caracteres
     title: {
         type: String,
-        required: [true, 'El título es requerido'],
-        minlength: [5, 'El título debe tener al menos 5 caracteres'],
+        required: [true, 'Required field'],
+        minlength: [5, 'Minimum length required'],
         trim: true
     },
     
     // Texto del post - requerido, mínimo 5 caracteres
     text: {
         type: String,
-        required: [true, 'El texto es requerido'],
-        minlength: [5, 'El texto debe tener al menos 5 caracteres'],
+        required: [true, 'Required field'],
+        minlength: [5, 'Minimum length required'],
         trim: true
     },
     
     // Autor del post - requerido
     author: {
         type: String,
-        required: [true, 'El autor es requerido'],
+        required: [true, 'Required field'],
         trim: true
     }
     
