@@ -26,6 +26,10 @@ const userSchema = new Schema({
     type: String,
     default: ''
   },
+  avatar: {
+    type: String,
+    default: null
+  },
   active: {
     type: Boolean,
     default: false
@@ -49,6 +53,12 @@ const userSchema = new Schema({
       delete ret.password;
       delete ret.lastPasswordChange;
       delete ret.tokenVersion;
+      
+      // Generar URL completa para el avatar si existe
+      if (ret.avatar) {
+        ret.avatarUrl = `/api/uploads/avatars/${ret.avatar}`;
+      }
+      
       return ret;
     }
   },
@@ -60,6 +70,12 @@ const userSchema = new Schema({
       delete ret.password;
       delete ret.lastPasswordChange;
       delete ret.tokenVersion;
+      
+      // Generar URL completa para el avatar si existe
+      if (ret.avatar) {
+        ret.avatarUrl = `/api/uploads/avatars/${ret.avatar}`;
+      }
+      
       return ret;
     }
   }

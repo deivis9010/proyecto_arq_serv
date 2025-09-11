@@ -45,6 +45,31 @@ const errorHandler = (err, req, res, next) => {
         });
     }
 
+    // Manejar errores de Multer (subida de archivos)
+    if (err.code === 'LIMIT_FILE_SIZE') {
+        return res.status(400).json({
+            success: false,
+            message: 'File too large',
+            error: 'FILE_SIZE_LIMIT'
+        });
+    }
+
+    if (err.code === 'LIMIT_UNEXPECTED_FILE') {
+        return res.status(400).json({
+            success: false,
+            message: 'Unexpected file field',
+            error: 'UNEXPECTED_FILE'
+        });
+    }
+
+    if (err.message && err.message.includes('Solo se permiten imágenes')) {
+        return res.status(400).json({
+            success: false,
+            message: 'Invalid file type',
+            error: 'INVALID_FILE_TYPE'
+        });
+    }
+
     // Manejar errores personalizados HttpError
     if (err instanceof HttpError) {
         

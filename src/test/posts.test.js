@@ -18,7 +18,8 @@ describe('Posts API', () => {
         testUser = await User.create({
             name: 'Test User',
             email: 'test@example.com',
-            password: 'testPassword123'
+            password: 'testPassword123',
+            active: true
         });
 
         // Hacer login para obtener el token

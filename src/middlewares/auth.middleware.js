@@ -25,10 +25,10 @@ const authenticateToken = async (req, res, next) => {
             return next(new HttpError('401', 'User no longer exists'));
         }
 
-        // Verificar que el usuario esté activo (opcional)
-        // if (user.active === false) {
-        //     return next(new HttpError('401', 'User account deactivated'));
-        // }
+        // Verificar que el usuario esté activo (opcional)       
+        if (user.active === false) {
+            return next(new HttpError('401', 'User account deactivated'));
+        }
 
         // Verificar que el token no sea demasiado antiguo comparado con la última actualización del usuario
         if (decoded.tokenCreatedAt) {
